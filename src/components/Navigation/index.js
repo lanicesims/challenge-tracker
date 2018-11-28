@@ -1,28 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink, } from 'reactstrap';
 
 import * as ROUTES from '../../constants/routes';
 
-const Navigation = () => (
-  <div>
-    <ul>
-      <li>
-        <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
-      </li>
-    </ul>
-  </div>
-);
+export default class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
 
-export default Navigation;
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand tag={Link} to={ROUTES.LANDING}>Challenge Tracker</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink tag={Link} to={ROUTES.SIGN_IN}>Sign In</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to={ROUTES.DASHBOARD}>Dashboard</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to={ROUTES.ACCOUNT}>Account</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to={ROUTES.ADMIN}>ADMIN</NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </div>
+    );
+  }
+}
