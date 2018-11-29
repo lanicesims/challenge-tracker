@@ -1,0 +1,127 @@
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/routes';
+
+// We need to initialize the state so the form knows where to start
+const INITIAL_STATE = {
+  username: '',
+  email: '',
+  passwordOne: '',
+  passwordTwo: '',
+  error: null
+};
+
+class SignUpFormBase extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+  }
+
+  onSubmit = event => {
+    const { username, email, passwordOne } = this.state;
+
+    this.props.firebase
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+        // route the user to their dashboard once the sign in is successful
+        this.props.history.push(ROUTES.DASHBOARD);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
+  };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+    const { username, email, passwordOne, passwordTwo, error } = this.state;
+    const isInvalid =
+      passwordOne !== passwordTwo ||
+      passwordOne === '' ||
+      email === '' ||
+      username === '';
+
+    return (
+      <Form onSubmit={this.onSubmit}>
+        <FormGroup>
+          <Label for="username">Username</Label>
+          <Input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter desired username"
+            value={username}
+            onChange={this.onChange}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="exampleEmail">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={this.onChange}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="passwordOne">Password</Label>
+          <Input
+            type="password"
+            name="passwordOne"
+            id="passwordOne"
+            placeholder="Password"
+            value={passwordOne}
+            onChange={this.onChange}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="passwordTwo">Confirm Password</Label>
+          <Input
+            type="password"
+            name="passwordTwo"
+            id="passwordTwo"
+            placeholder="Confirm Password"
+            value={passwordTwo}
+            onChange={this.onChange}
+          />
+        </FormGroup>
+
+        <Button disabled={isInvalid} type="submit">
+          Sign Up
+        </Button>
+
+        {error && <p>{error.message}</p>}
+      </Form>
+    );
+  }
+}
+
+const SignUpLink = () => (
+  <p>
+    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+  </p>
+);
+
+const SignUpForm = compose(
+  withRouter,
+  withFirebase,
+)(SignUpFormBase);
+
+export default SignUpForm;
+
+export { SignUpLink };
