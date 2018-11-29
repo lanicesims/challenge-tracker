@@ -32,3 +32,16 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+##.env File
+
+At the root level of the project you need to create your `.env` file so that you can get the proper config object built to connect to Firebase. 
+Copy the following and get the proper config variables from the **Development** Firebase Project Dashboard and apply them appropriately
+
+REACT_APP_DEV_API_KEY=XXXXxxxx
+REACT_APP_DEV_AUTH_DOMAIN=xxxxXXXX.firebaseapp.com
+REACT_APP_DEV_DATABASE_URL=https://xxxXXXX.firebaseio.com
+REACT_APP_DEV_PROJECT_ID=xxxxXXXX
+REACT_APP_DEV_STORAGE_BUCKET=xxxxXXXX.appspot.com
+REACT_APP_DEV_MESSAGING_SENDER_ID=xxxxXXXX
