@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
@@ -66,7 +66,7 @@ class SignUpFormBase extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <Label for="exampleEmail">Email</Label>
+          <Label for="email">Email</Label>
           <Input
             type="email"
             name="email"
@@ -86,6 +86,7 @@ class SignUpFormBase extends React.Component {
             placeholder="Password"
             value={passwordOne}
             onChange={this.onChange}
+            valid={isInvalid}
           />
         </FormGroup>
 
@@ -101,18 +102,23 @@ class SignUpFormBase extends React.Component {
           />
         </FormGroup>
 
-        <Button disabled={isInvalid} type="submit">
+        {/* If there are any errors from sign up we need to hadle that */}
+        { error &&
+          <Alert color="danger">
+          {error.message}
+          </Alert>
+        }
+
+        <Button className="mt-2" disabled={isInvalid} type="submit">
           Sign Up
         </Button>
-
-        {error && <p>{error.message}</p>}
       </Form>
     );
   }
 }
 
 const SignUpLink = () => (
-  <p>
+  <p className="mt-2">
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 );
