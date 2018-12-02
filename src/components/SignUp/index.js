@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from "reactstrap";
 
 import SignUpForm from './SignUpForm';
+import { SignInLink } from '../SignIn/SignInForm';
 
 const SignUpPage = () => (
   <Container>
@@ -16,7 +17,8 @@ const SignUpPage = () => (
 
     <Row className="justify-content-center">
       <Col sm="12" md="6">
-        <SignUpForm/>
+        <SignUpForm />
+        <SignInLink />
       </Col>
     </Row>
   </Container>
