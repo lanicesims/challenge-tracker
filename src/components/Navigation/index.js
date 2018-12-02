@@ -12,6 +12,7 @@ import {
 
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
+import { AuthUserContext } from '../Session';
 
 const NavigationAuth = () => (
   <React.Fragment>
@@ -64,17 +65,19 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <Navbar color="light" light expand="md">
-        <NavbarBrand tag={Link} to={ROUTES.LANDING}>
-          Challenge Tracker
-        </NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            {this.props.authUser ? <NavigationAuth /> : <NavigationNonAuth />}
-          </Nav>
-        </Collapse>
-      </Navbar>
+      <AuthUserContext.Consumer>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand tag={Link} to={ROUTES.LANDING}>
+            Challenge Tracker
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              {authUser => authUser ? <NavigationAuth /> : <NavigationNonAuth />}
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </AuthUserContext.Consumer>
     );
   }
 }
