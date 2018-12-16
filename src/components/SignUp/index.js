@@ -16,7 +16,7 @@ const SignUpPage = () => (
     </Row>
 
     <Row className="justify-content-center">
-      <Col sm="12" md="6">
+      <Col sm="12" md="8">
         <SignUpForm />
         <SignInLink />
       </Col>

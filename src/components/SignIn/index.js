@@ -3,7 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import SignInForm from './SignInForm';
 import { SignUpLink } from '../SignUp/SignUpForm';
-import { PasswordForgetLink } from '../PasswordForget';
+import { PasswordForgetLink } from '../PasswordForget/PasswordForgetForm';
 
 const SignInPage = () => (
   <Container>
@@ -14,7 +14,7 @@ const SignInPage = () => (
     </Row>
 
     <Row className="justify-content-center">
-      <Col sm="12" md="6">
+      <Col sm="12" md="8">
         <p>Have an account? Sign in below.</p>
         <SignInForm />
         <SignUpLink />
