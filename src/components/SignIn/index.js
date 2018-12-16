@@ -3,6 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import SignInForm from './SignInForm';
 import { SignUpLink } from '../SignUp/SignUpForm';
+import { PasswordForgetLink } from '../PasswordForget';
 
 const SignInPage = () => (
   <Container>
@@ -17,6 +18,7 @@ const SignInPage = () => (
         <p>Have an account? Sign in below.</p>
         <SignInForm />
         <SignUpLink />
+        <PasswordForgetLink />
       </Col>
     </Row>
   </Container>
