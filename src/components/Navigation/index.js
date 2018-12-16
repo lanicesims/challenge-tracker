@@ -65,19 +65,21 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <AuthUserContext.Consumer>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand tag={Link} to={ROUTES.LANDING}>
-            Challenge Tracker
-          </NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {authUser => authUser ? <NavigationAuth /> : <NavigationNonAuth />}
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </AuthUserContext.Consumer>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand tag={Link} to={ROUTES.LANDING}>
+          Challenge Tracker
+        </NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            <AuthUserContext.Consumer>
+              {authUser =>
+                authUser ? <NavigationAuth /> : <NavigationNonAuth />
+              }
+            </AuthUserContext.Consumer>
+          </Nav>
+        </Collapse>
+      </Navbar>
     );
   }
 }
