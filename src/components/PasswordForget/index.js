@@ -1,87 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
-
-class PasswordForgetFormBase extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
-
-  onSubmit = event => {
-    const { email } = this.state;
-
-    this.props.firebase
-      .doPasswordReset(email)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  render() {
-    const { email, error } = this.state;
-
-    const isInvalid = email === '';
-
-    return (
-      <Form onSubmit={this.onSubmit}>
-        <FormGroup>
-          <Label for="email">Email Address</Label>
-          <Input
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="email"
-            placeholder="Email Address"
-          />
-        </FormGroup>
-
-        {/* If there are any errors from sign up we need to hadle that */}
-        { error &&
-          <Alert color="danger">
-          {error.message}
-          </Alert>
-        }
-
-        <Button disabled={isInvalid} type="submit">Reset My Password</Button>
-      </Form>
-    );
-  }
-}
-
-const INITIAL_STATE = {
-  email: '',
-  error: null
-};
+import PasswordForgetForm from './PasswordForgetForm';
 
 const PasswordForgetPage = () => (
-  <div>
-    <h1>PasswordForgetPage</h1>
-    <PasswordForgetForm />
-  </div>
-);
-
-const PasswordForgetLink = () => (
-  <p className="mt-2">
-    Uh oh, forget your password? Pesky little things. That's ok. <Link to={ROUTES.PASSWORD_FORGET}>Reset it here.</Link>
-  </p>
+  <Container>
+    <Row className="text-center">
+      <Col sm="12">
+        <h1>Reset Your Password</h1>
+      </Col>
+    </Row>
+    <Row className="justify-content-center">
+      <Col sm="12" md="8">
+        <p>
+          We've all been here before, forgetting passwords. Just put in your
+          email below and we'll get you hooked up with a chance to put in a new
+          password.
+        </p>
+        <PasswordForgetForm />
+      </Col>
+    </Row>
+  </Container>
 );
 
 export default PasswordForgetPage;
-
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
-
-export { PasswordForgetForm, PasswordForgetLink };
