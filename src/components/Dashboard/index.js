@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { withAuthorization } from '../Session';
+
 class Dashboard extends React.Component {
   render() {
     return (
@@ -10,4 +12,6 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(Dashboard);

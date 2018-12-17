@@ -1,16 +1,33 @@
 import React from 'react';
+import { Container, Row, Col } from "reactstrap";
 
+import { AuthUserContext, withAuthorization } from '../Session';
 import PasswordChange from '../PasswordChange';
 
 class AccountPage extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Account</h1>
-        <PasswordChange />
-      </div>
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <Container>
+            <Row className="text-center">
+              <Col sm="12">
+                <h1>Hey {authUser.email}! Your Account</h1>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-center">
+              <Col sm="12" md="8">
+                <PasswordChange />
+              </Col>
+            </Row>
+          </Container>
+        )}
+      </AuthUserContext.Consumer>
     );
   }
 }
 
-export default AccountPage;
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(AccountPage);
