@@ -6,7 +6,8 @@ import { withFirebase } from '../Firebase';
 const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
-  error: null
+  error: null,
+  success: null
 };
 
 class PasswordChangeFormBase extends React.Component {
@@ -22,6 +23,7 @@ class PasswordChangeFormBase extends React.Component {
     this.props.firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
+        this.setState({ success: "Hooray! Your password has been updated!" });
         this.setState({ ...INITIAL_STATE });
       })
       .catch(error => {
@@ -36,7 +38,7 @@ class PasswordChangeFormBase extends React.Component {
   };
 
   render() {
-    const { passwordOne, passwordTwo, error } = this.state;
+    const { passwordOne, passwordTwo, error, success } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo || passwordOne === '' || passwordTwo === '';
@@ -70,6 +72,7 @@ class PasswordChangeFormBase extends React.Component {
 
         {/* If there are any errors from sign up we need to hadle that */}
         {error && <Alert color="danger">{error.message}</Alert>}
+        {success && <Alert color="success">{success}</Alert>}
 
         <Button disabled={isInvalid} type="submit">
           Reset My Password
