@@ -8,7 +8,6 @@ import * as ROUTES from '../../constants/routes';
 
 // We need to initialize the state so the form knows where to start
 const INITIAL_STATE = {
-  username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -23,7 +22,7 @@ class SignUpFormBase extends React.Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { email, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -44,27 +43,14 @@ class SignUpFormBase extends React.Component {
   };
 
   render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
+    const { email, passwordOne, passwordTwo, error } = this.state;
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
-      email === '' ||
-      username === '';
+      email === '';
 
     return (
       <Form onSubmit={this.onSubmit}>
-        <FormGroup>
-          <Label for="username">Username</Label>
-          <Input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Enter desired username"
-            value={username}
-            onChange={this.onChange}
-          />
-        </FormGroup>
-
         <FormGroup>
           <Label for="email">Email</Label>
           <Input
