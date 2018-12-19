@@ -3,6 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import { AuthUserContext, withAuthorization } from '../Session';
 import PasswordChange from '../PasswordChange';
+import User from './User';
 
 class AccountPage extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class AccountPage extends React.Component {
 
             <Row className="justify-content-center">
               <Col sm="12" md="8">
+                <User />
                 <PasswordChange />
               </Col>
             </Row>
